@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
- before_action :set_task, only: [:show, :edit, :update, :destroy]
+ before_action :set_task, only: [:show, :edit, :update, :destroy, :change]
  before_action :authenticate_user!
 
  # GET /tasks
@@ -43,6 +43,7 @@ class TasksController < ApplicationController
  # PATCH/PUT /tasks/1
  # PATCH/PUT /tasks/1.json
  def update
+ 
    respond_to do |format|
      if @task.update(task_params)
        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
@@ -53,6 +54,13 @@ class TasksController < ApplicationController
      end
    end
  end
+ 
+def change
+    @task.update_attributes(state: params[:state])
+    respond_to do |format|
+     format.html { redirect_to tasks_path, notice: 'Tarefa alterada com sucesso!' }
+   end
+end
 
  # DELETE /tasks/1
  # DELETE /tasks/1.json
